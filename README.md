@@ -1,5 +1,21 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# Outside
+A WebApp that uses a Map to show events based on geo location.
+
+## Pending
+- [x] Implement Map from OSM using Leaflet, disabling SSR;
+- [x] Show locations on Map using Markers;
+- [x] Load events summary to location through Tooltip;
+- [x] Implement Event Summary component with Offcanvas (React-Bootstrap);
+- [x] Implement Event Detais component with Modal (React-Bootstrap);
+- [x] Implement Search flow;
+- [ ] Implement Authentication flow;
+- [ ] Implement Sign Up flow;
+- [ ] Implement Checkout flow;
+
+Detailed tasks: [Trello](https://trello.com/b/NyUphhWZ/outside) (Private)
+
 ## Getting Started
 
 First, run the development server:
