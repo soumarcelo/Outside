@@ -1,0 +1,13 @@
+.scroll-box__overflow {
+  cursor: grab;
+  overflow-x: scroll;
+  /* IE */
+  -ms-overflow-style: none;
+  /* Firefox */
+  overflow: -moz-scrollbars-none;
+}
+
+.scroll-box__overflow::-webkit-scrollbar {
+  /* Chrome and Safari */
+  display: none;
+}
