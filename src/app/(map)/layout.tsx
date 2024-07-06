@@ -21,22 +21,27 @@ import {
 import { LocationData, LocationEventData } from "@/app/lib/definitions/data";
 import { useRouter } from "next/navigation";
 import { generateEventCardProps } from "@/app/lib/utils";
+import { Card, CardBody, ListGroup, ListGroupItem, Stack } from "react-bootstrap";
+import EventCardMobile from "../components/events/event-card-mobile";
 
 export const MapContext = createContext<MapContextProviderProps | null>(null);
 
 export default function MapLayout({ children }) {
   const router = useRouter();
 
-  // const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
-  // const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
   const isDesktopOrLaptop = useMediaQuery({ query: '(min-width: 1224px)' });
+  const isMobileLandscape = !isPortrait && isTabletOrMobile;
 
   const [mapRef, setMapRef] = useState<LMap | null>(null);
   const [viewBoundsRef, setViewBounds] = useState<LatLngBounds | undefined>(undefined);
   const [locations, setLocations] = useState<LocationData[]>([]);
   const [eventsSummary, setEventsSummary] = useState<EventsSummaryProps | undefined>(undefined);
   const [mainEvents, setMainEvents] = useState<LocationEventData[]>([]);
-  const [cardEvents, setCardEvents] = useState<JSX.Element[]>([]);
+  const [eventCards, setEventCards] = useState<JSX.Element[]>([]);
+  const [mobileEventCards, setMobileEventCards] = useState<JSX.Element[]>([]);
+  const [cards, setCards] = useState<JSX.Element[]>([]);
   const [currentQuery, setCurrentQuery] = useState<string | undefined>(undefined);
 
   const updateMarkers = () => {
@@ -73,7 +78,9 @@ export default function MapLayout({ children }) {
 
   // Update main events from viewbounds
   useEffect(() => {
-    const cards = mainEvents.map((ev) => {
+    const mobileCards : Array<JSX.Element> = [];
+    const _eventCards : Array<JSX.Element> = [];
+    const _cards = mainEvents.map((ev) => {
       const cardProps = generateEventCardProps(ev, () => {
         const location = fetchLocationFromId(ev.locationId);
         if (location === undefined) return;
@@ -81,10 +88,25 @@ export default function MapLayout({ children }) {
         mapRef?.flyTo(location?.position, mapRef.getMaxZoom());
         router.push("/locations/" + ev.locationId + "/events/" + ev.id);
       })
-      return <EventCard key={cardProps.cardId} {...cardProps} />
+      const mobileCard = <EventCardMobile key={`mobile_${cardProps.cardId}`} {...cardProps} />;
+      const _eventCard = <EventCard key={cardProps.cardId} {...cardProps} />;
+
+      mobileCards.push(mobileCard);
+      _eventCards.push(_eventCard);
+
+      if (isMobileLandscape) return mobileCard;
+      return _eventCard;
     });
-    setCardEvents(cards);
+
+    setMobileEventCards(mobileCards);
+    setEventCards(_eventCards);
+    setCards(_cards);
   }, [mainEvents]);
+
+  useEffect(() => {
+    const _cards = isMobileLandscape ? mobileEventCards : eventCards;
+    setCards(_cards);
+  }, [isMobileLandscape]);
 
   // Marker - Events Handlers
   const markerEventHandlers: (id: string, position: LatLngExpression) => LeafletEventHandlerFnMap = (id, position) => ({
@@ -139,7 +161,7 @@ export default function MapLayout({ children }) {
       </div>
       <div className="position-fixed top-0 start-50 translate-middle-x">
         <ScrollBox id="main-events">
-          {cardEvents}
+          {cards}
         </ScrollBox>
       </div>
       <div className="position-fixed bottom-0 start-0 p-2">

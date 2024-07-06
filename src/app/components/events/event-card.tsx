@@ -3,7 +3,7 @@ import { EventCardProps } from "@/app/lib/definitions/props";
 const cardWidth: string = "250px";
 const cardHeight: string = "125px";
 
-export default function EventCard({ ...props }: EventCardProps) {
+export default function EventCard(props : EventCardProps) {
   return (
       <div className="card bg-transparent shadow-sm" style={{ width: cardWidth, height: cardHeight}}>
         <img className="card-img" src={props.eventImageURL} width={cardWidth} height={cardHeight} />
