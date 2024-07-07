@@ -1,10 +1,10 @@
-import { LatLngExpression } from "leaflet";
+import { LatLngTuple } from "leaflet";
 import { DateTime } from "luxon";
 
 export interface LocationEventData {
   id: string,
   name: string,
-  startsAt: DateTime,
+  startsAt: string,
   // position?: LatLngExpression,
   locationId?: string,
   isMain: boolean
@@ -12,7 +12,7 @@ export interface LocationEventData {
 
 export interface LocationData {
   id: string,
-  position: LatLngExpression,
+  position: LatLngTuple,
   isHot: boolean,
   events: Array<LocationEventData> //Deprecated attrib
 }

@@ -3,29 +3,30 @@ import { v4 } from "uuid";
 import { DateTime } from "luxon";
 import { DetailedEventData, EventData, LocationData, LocationEventData } from "./definitions/data";
 import { EventsSummaryProps } from "./definitions/props";
+import { Console } from "console";
 
 const events: LocationEventData[] = [
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: ["festa"] },
-  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: ["palestra", "palestra motivacional"] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: ["festa eletronica"] },
-  { id: "a2559964-a225-423b-8d02-3587496f0dcb", isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: ["festa junina"] },
-  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: ["festa do pijama", "festa"] },
-  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: ["festa", "festa pop"] },
-  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: ["yoga", "yoga ao ar livre"] },
-  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: ["festa"] },
+  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: ["palestra", "palestra motivacional"] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: ["festa eletronica"] },
+  { id: "a2559964-a225-423b-8d02-3587496f0dcb", isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: ["festa junina"] },
+  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: ["festa do pijama", "festa"] },
+  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: ["festa", "festa pop"] },
+  { id: v4(), isMain: true, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: ["yoga", "yoga ao ar livre"] },
+  { id: v4(), isMain: false, name: "Evento com nome incrível demais", startsAt: DateTime.now().toISO(), tags: [] },
 ]
 
 const locations: LocationData[] = [
@@ -55,6 +56,12 @@ const locations: LocationData[] = [
   },
 ];
 
+function boundsContains(point: Array<Number>, bounds : Array<Number>) : boolean {
+  const latContains = point[0] >= bounds[0] && point[0] <= bounds[2];
+  const lngContains = point[1] >= bounds[1] && point[1] <= bounds[3];
+  return latContains && lngContains;
+}
+
 export function fetchLocationFromId(id: string | undefined): LocationData | undefined {
   if (id === undefined) return undefined;
 
@@ -65,21 +72,21 @@ export function fetchLocationFromId(id: string | undefined): LocationData | unde
   return undefined;
 }
 
-export function fetchLocationsAtBounds(bounds: LatLngBounds): LocationData[] {
+export function fetchLocationsAtBounds(bounds: Array<Number>): LocationData[] {
   const currentLocations: LocationData[] = [];
   for (let index = 0; index < locations.length; index++) {
-    if (bounds.contains(locations[index].position)) currentLocations.push(locations[index]);
+    if (boundsContains(locations[index].position, bounds)) currentLocations.push(locations[index]);
   }
   return currentLocations;
 }
 
-export function fetchLocationsFromQuery(query: string, bounds: LatLngBounds): LocationData[] {
+export function fetchLocationsFromQuery(query: string, bounds: Array<Number>): LocationData[] {
   const currentLocations: LocationData[] = [];
   const parsedQuery = query.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").split('.').join("");
   const tags: string[] = parsedQuery.toLowerCase().split(" ");
   for (let index = 0; index < locations.length; index++) {
     const location = locations[index];
-    if (!bounds.contains(location.position)) continue;
+    if (!boundsContains(location.position, bounds)) continue;
     if (currentLocations.indexOf(location) >= 0) continue;
     for (let indexj = 0; indexj < location.events.length; indexj++) {
       const event = location.events[indexj];
@@ -93,12 +100,12 @@ export function fetchLocationsFromQuery(query: string, bounds: LatLngBounds): Lo
   return currentLocations;
 }
 
-export function fetchMainEventsAtBounds(bounds: LatLngBounds): LocationEventData[] {
+export function fetchMainEventsAtBounds(bounds: Array<Number>): LocationEventData[] {
   const mainEvents: LocationEventData[] = locations.filter((l) => l.isHot).flatMap((l) => {
     const events = []
     for (let index = 0; index < l.events.length; index++) {
       const event = l.events[index];
-      if (event.isMain && bounds.contains(l.position)) {
+      if (event.isMain && boundsContains(l.position, bounds)) {
         // event.position = l.position;
         event.locationId = l.id;
         events.push(event);
@@ -199,7 +206,7 @@ export function fetchEventsSumaryFromLocationWithQuery(id: string, query: String
   return undefined;
 }
 
-export function fetchEventData(id: string, summary?: boolean): EventData | undefined {
+export function fetchEventData(id: string): EventData | undefined {
   const description: string = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt felis non erat sagittis, at ultrices orci fermentum. Donec rutrum interdum fringilla. Nulla interdum porttitor volutpat. Etiam in quam justo. Donec vitae erat eget dui accumsan varius. Praesent at bibendum urna. Proin scelerisque felis ac libero efficitur hendrerit. Morbi eleifend pulvinar dapibus. Etiam ac eros pellentesque, auctor dui dapibus, gravida lorem.
 
   Sed varius erat vel velit tincidunt tempus. Mauris nisl lacus, egesta...`;
@@ -281,13 +288,13 @@ export function fetchDetailedEventData(id: string): DetailedEventData | undefine
   return undefined;
 }
 
-export function fetchEventsFromQuery(query: string, bounds: LatLngBounds) {
+export function fetchEventsFromQuery(query: string, bounds: Array<Number>) {
   const parsedQuery = query.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").split('.').join("");
   const tags: string[] = parsedQuery.toLowerCase().split(" ");
   const validEvents: LocationEventData[] = [];
   for (let index = 0; index < locations.length; index++) {
     const location = locations[index];
-    if (!bounds.contains(location.position)) continue;
+    if (!boundsContains(location.position, bounds)) continue;
     for (let indexk = 0; indexk < location.events.length; indexk++) {
       const event = location.events[indexk];
       if (validEvents.indexOf(event) >= 0) continue;

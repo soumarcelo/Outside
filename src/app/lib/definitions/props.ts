@@ -61,7 +61,7 @@ export interface EventFnEventsHandlers {
 
 export interface EventProps {
   id?: string,
-  show: boolean,
+  // show: boolean,
 }
 
 export interface SummarizedEventFnEventsHandlers extends EventFnEventsHandlers {
@@ -70,8 +70,7 @@ export interface SummarizedEventFnEventsHandlers extends EventFnEventsHandlers {
 }
 
 export interface SummarizedEventProps extends EventProps {
-  event?: EventData,
-  eventsHandlers: SummarizedEventFnEventsHandlers
+  event: EventData,
 }
 
 export interface SelectedTicketsProps {
@@ -84,8 +83,8 @@ export interface DetailedEventFnEventsHandlers extends EventFnEventsHandlers {
 }
 
 export interface DetailedEventProps extends EventProps {
-  event?: DetailedEventData,
-  eventsHandlers: DetailedEventFnEventsHandlers
+  event: DetailedEventData,
+  // eventsHandlers: DetailedEventFnEventsHandlers
 }
 
 export interface EventTicketAllotmentProps {

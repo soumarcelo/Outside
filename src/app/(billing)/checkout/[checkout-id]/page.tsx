@@ -1,7 +1,4 @@
-'use client'
-
 import TicketsAllotmentsSummary from "@/app/components/tickets-allotments/summary";
-import { useState } from "react";
 import { Accordion, AccordionBody, AccordionHeader, AccordionItem, Button, Image, Stack } from "react-bootstrap";
 
 export default function Page({ params }) {
@@ -28,7 +25,9 @@ export default function Page({ params }) {
     },
   ];
 
-  const [paymentMethod, setPaymentMethod] = useState({ name: "PIX", img: "https://dummyimage.com/35x35.png/000/fff&text=Logo" })
+  // console.log(searchParams);
+
+  // const [paymentMethod, setPaymentMethod] = useState({ name: "PIX", img: "https://dummyimage.com/35x35.png/000/fff&text=Logo" })
 
   return (
     <Stack className="my-5 w-75 mx-auto">
@@ -49,8 +48,8 @@ export default function Page({ params }) {
           <AccordionBody>
             <Stack direction="horizontal">
               <Stack direction="horizontal" gap={2} className="w-100">
-                <Image height={35} width={35} src={paymentMethod.img} />
-                <span className="fw-bold">{paymentMethod.name}</span>
+                {/* <Image height={35} width={35} src={paymentMethod.img} />
+                <span className="fw-bold">{paymentMethod.name}</span> */}
               </Stack>
               <Button>Trocar</Button>
             </Stack>

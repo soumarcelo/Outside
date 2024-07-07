@@ -1,37 +1,19 @@
 'use client'
 
 import EventCard from "@/app/components/events/event-card";
-import { fetchEventsFromQuery, fetchLocationsFromQuery } from "@/app/lib/data";
 import { generateEventCardProps } from "@/app/lib/utils";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Offcanvas, OffcanvasBody, OffcanvasHeader, OffcanvasTitle, Stack } from "react-bootstrap";
-import { MapContext } from "@/app/(map)/layout";
-import { MapContextProviderProps } from "@/app/lib/definitions/props";
+import { LocationEventData } from "@/app/lib/definitions/data";
 
-export default function Page({ params }) {
-  const query = decodeURIComponent(params.query);
-
+export default function EventsQueryResults({ query, queryResults }) {
   const router = useRouter();
-  const { 
-    mapViewBounds,
-    setLocations,
-    setMainEvents,
-    setCurrentQuery,
-    updateMarkers,
-    updateMainEvents
-   } = useContext<MapContextProviderProps>(MapContext);
   const [showResults, setShowResults] = useState<boolean>(true);
   const [results, setResults] = useState<JSX.Element[]>([]);
   
   useEffect(() => {
-    const viewBounds = mapViewBounds?.(); 
-    if (viewBounds === undefined) return;
-    const locationEvents = fetchLocationsFromQuery(query, viewBounds);
-    setLocations(locationEvents);
-    
-    const queryResults = fetchEventsFromQuery(query, viewBounds);
-    const cards = queryResults.map((ev) => {
+    const cards = queryResults.map((ev : LocationEventData) => {
       const cardProps = generateEventCardProps(ev, () => {
         router.push("/locations/" + ev.locationId + "/events/" + ev.id);
       })
@@ -39,20 +21,14 @@ export default function Page({ params }) {
     });
 
     setResults(cards);
-    setCurrentQuery(query);
-    setMainEvents([]);
-  }, [mapViewBounds?.()]);
+  }, [queryResults]);
 
   const eventsHandlers = {
     show: () => { },
     hide: () => setShowResults(false),
-    exited: () => { 
-      router.push("/");
-      setCurrentQuery(undefined);
-      updateMarkers();
-      updateMainEvents();
-     }
+    exited: () => router.push("/")
   };
+  
   return (
     <Offcanvas
       backdrop={false}

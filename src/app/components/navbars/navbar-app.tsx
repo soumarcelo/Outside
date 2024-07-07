@@ -1,6 +1,9 @@
+'use client'
+
 import { ChangeEvent, useRef, useState } from "react";
 import SearchBar from "../searchbar";
 import { Button, ListGroup, Overlay } from "react-bootstrap";
+import { useRouter } from "next/navigation";
 
 const suggestions = [
   "Festa junina",
@@ -10,6 +13,7 @@ const suggestions = [
 ];
 
 export default function NavBar(props) {
+  const router = useRouter();
   const [searchText, setSearchText] = useState<string>("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const target = useRef<HTMLElement>(null);
@@ -21,7 +25,7 @@ export default function NavBar(props) {
       const text: string = ev.target.value;
       setSearchText(text);
     },
-    onInputSubmit: () => props.onQuery(searchText)
+    onInputSubmit: () => router.push("/search/" + searchText)
   };
 
   return (
@@ -53,7 +57,7 @@ export default function NavBar(props) {
             <ListGroup className="shadow-sm" style={{ width: 300 }}>
               {suggestions.map((s, index) => (
                 <ListGroup.Item key={index}>
-                  <Button variant="link" className="w-100 link-underline link-underline-opacity-0" onClick={() => props.onQuery(s)}>{s}</Button>
+                  <Button variant="link" className="w-100 link-underline link-underline-opacity-0" onClick={() => router.push("/search/" + s)}>{s}</Button>
                 </ListGroup.Item>
               ))}
             </ListGroup>
